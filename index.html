@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localizador de Itens | Ultracompacto</title>
+    <title>Localizador de Itens | Compacto Otimizado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -29,24 +29,24 @@
         .btn-green-custom:hover {
             background-color: #22c55e;
         }
-        /* Ajuste fino para inputs e selects mais compactos */
-        .ultra-compact-input {
-             /* Reduzindo o padding vertical: 0.5rem (p-2) */
-             padding: 0.5rem 0.75rem; 
+        /* Ajuste fino para inputs e selects mais confortáveis */
+        .compact-input {
+             /* p-2.5, um meio termo */
+             padding: 0.625rem 0.75rem; 
         }
-        .ultra-compact-button {
-             /* Reduzindo o padding vertical: 0.375rem (py-1.5) */
-             padding-top: 0.375rem; 
-             padding-bottom: 0.375rem;
+        .compact-button {
+             /* py-2, um meio termo */
+             padding-top: 0.5rem; 
+             padding-bottom: 0.5rem;
              font-size: 0.875rem; /* text-sm */
         }
     </style>
 </head>
-<body class="min-h-screen p-3 md:p-4">
+<body class="min-h-screen p-4 md:p-6">
 
     <div id="app" class="max-w-3xl mx-auto">
         
-        <header class="flex items-center justify-between bg-[#3d3d3d] p-2 mb-2 rounded-lg shadow-xl border border-[#444]">
+        <header class="flex items-center justify-between bg-[#3d3d3d] p-3 mb-4 rounded-lg shadow-xl border border-[#444]">
             <h1 class="text-base font-bold text-green-400 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -58,19 +58,19 @@
             </div>
         </header>
 
-        <div class="bg-[#2e2e2e] p-4 rounded-xl shadow-lg border border-[#3d3d3d] mb-2">
-            <h2 class="text-sm font-semibold mb-2 text-gray-200 border-b border-[#3d3d3d] pb-1">Buscar Item</h2>
+        <div class="bg-[#2e2e2e] p-6 rounded-xl shadow-lg border border-[#3d3d3d] mb-4">
+            <h2 class="text-base font-semibold mb-4 text-gray-200 border-b border-[#3d3d3d] pb-2">Buscar Item</h2>
             
-            <div class="mb-2">
-                <label for="itemCode" class="block text-xs font-medium text-gray-400 mb-0.5">
+            <div class="mb-4">
+                <label for="itemCode" class="block text-sm font-medium text-gray-400 mb-1">
                     Código do Item (COD ITEM)
                 </label>
                 <input type="text" id="itemCode" placeholder="Informe o código do item"
-                        class="w-full ultra-compact-input border border-[#444] rounded-lg text-sm font-mono focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase bg-[#1f1f1f] text-white">
+                        class="w-full compact-input border border-[#444] rounded-lg text-base font-mono focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase bg-[#1f1f1f] text-white">
             </div>
 
             <button id="searchButton" onclick="searchItem()"
-                    class="w-full btn-green-custom text-white font-bold ultra-compact-button px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center">
+                    class="w-full btn-green-custom text-white font-bold compact-button px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
@@ -78,20 +78,20 @@
             </button>
         </div>
         
-        <div id="clientFilterBlock" class="bg-[#2e2e2e] p-4 rounded-xl shadow-lg border border-[#3d3d3d] mb-2 hidden">
-            <h2 class="text-sm font-semibold mb-1 text-gray-200">Filtrar por Pedido</h2>
-            <label for="clientSelect" class="block text-xs font-medium text-gray-400 mb-0.5">
+        <div id="clientFilterBlock" class="bg-[#2e2e2e] p-6 rounded-xl shadow-lg border border-[#3d3d3d] mb-4 hidden">
+            <h2 class="text-base font-semibold mb-2 text-gray-200">Filtrar por Pedido</h2>
+            <label for="clientSelect" class="block text-sm font-medium text-gray-400 mb-1">
                 Selecione o Pedido (com nome do Cliente)
             </label>
             <select id="clientSelect" onchange="filterResultsByClient(this.value)"
-                    class="w-full ultra-compact-input border border-[#444] rounded-lg text-sm font-medium focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-[#1f1f1f] text-white appearance-none pr-10">
+                    class="w-full compact-input border border-[#444] rounded-lg text-base font-medium focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-[#1f1f1f] text-white appearance-none pr-10">
                 </select>
         </div>
 
-        <div id="resultsBlock" class="bg-[#242424] p-4 rounded-xl shadow-xl border border-[#333] hidden">
-            <h2 class="text-sm font-semibold mb-2 text-gray-200 border-b border-[#3d3d3d] pb-1">Itens do Carregamento</h2>
+        <div id="resultsBlock" class="bg-[#242424] p-6 rounded-xl shadow-xl border border-[#333] hidden">
+            <h2 class="text-base font-semibold mb-4 text-gray-200 border-b border-[#3d3d3d] pb-2">Itens do Carregamento</h2>
             
-            <div id="results" class="flex flex-col items-center justify-center gap-1 p-1">
+            <div id="results" class="flex flex-col items-center justify-center gap-2 p-2">
                 </div>
 
             <div id="urlSection" class="hidden">
@@ -122,7 +122,7 @@
             "QTDE"
         ];
         
-        // --- Funções Auxiliares (mantendo a lógica, ajustando apenas a formatação de exibição) ---
+        // --- Funções Auxiliares (Lógica de Busca e Filtro Inalterada) ---
 
         async function searchItem() {
             // ... (Lógica de busca inalterada) ...
@@ -131,6 +131,7 @@
             allFetchedItems = [];
             
             searchButton.disabled = true;
+            // Mantendo h-4/w-4 no spinner
             searchButton.innerHTML = `<div class="spinner border-4 border-[#333] border-t-4 h-4 w-4 rounded-full mr-2"></div> Buscando...`;
             
             const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzfjKdYKPkY-HsqB3uxySAQMTUPYrhNby6qjybXWaUgI4TWlwhjC9MNXWT4f9ETL84O/exec"; 
@@ -181,7 +182,7 @@
         }
         
         function setupClientFilter(items) {
-             // ... (Lógica de filtro inalterada) ...
+            // ... (Lógica de filtro inalterada) ...
             const uniqueClientsMap = {};
             
             items.forEach(item => {
@@ -240,25 +241,25 @@
         }
 
         /**
-         * Exibe a mensagem de aguardando seleção. (Ajuste para remover min-h)
+         * Exibe a mensagem de aguardando seleção. (Revertendo para p-3)
          */
         function displayAwaitingSelection(message) {
             resultsDiv.classList.remove('border-green-600', 'border-red-600', 'border-2', 'bg-transparent');
             
-            // Removendo min-h e reduzindo p-3 para p-2
-            resultsDiv.classList.add('flex', 'flex-col', 'items-center', 'justify-center', 'p-2', 'rounded-lg', 'border', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
+            // p-3 e fonte text-sm
+            resultsDiv.classList.add('flex', 'flex-col', 'items-center', 'justify-center', 'p-3', 'rounded-lg', 'border', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
             
-            resultsDiv.innerHTML = `<p class="text-xs text-gray-500 italic text-center" id="initialMessage">${message}</p>`;
+            resultsDiv.innerHTML = `<p class="text-sm text-gray-500 italic text-center" id="initialMessage">${message}</p>`;
             
             resultsBlock.classList.add('hidden'); 
         }
 
         /**
-         * Exibe uma LISTA de itens encontrados no formato de Cartão.
+         * Exibe uma LISTA de itens encontrados no formato de Cartão. (Ajuste leve nos cards)
          */
         function displaySuccess(items) {
             resultsDiv.classList.remove('flex', 'items-center', 'justify-center', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
-            resultsDiv.classList.add('border-green-600', 'border-2', 'p-1', 'bg-transparent'); // p-1
+            resultsDiv.classList.add('border-green-600', 'border-2', 'p-3', 'bg-transparent'); // p-3 para o container
             
             let htmlContent = '';
             
@@ -270,9 +271,9 @@
                     if (item.hasOwnProperty(key)) {
                         const value = item[key]; 
                         
-                        // Reduzindo mb-1 para mb-0.5
+                        // Revertendo mb-0.5 para mb-1, e text-sm no valor
                         cardContent += `
-                            <div class="flex flex-col mb-0.5">
+                            <div class="flex flex-col mb-1">
                                 <span class="text-xs font-medium uppercase text-gray-400">${key.toUpperCase()}:</span>
                                 <span class="text-sm text-white font-medium break-words">${value}</span>
                             </div>
@@ -285,9 +286,9 @@
                 });
                 
                 if (validContentFoundInCard) {
-                    // Reduzindo o padding do card de p-2 para p-1, e mb-2 para mb-1
+                    // Revertendo p-1 para p-2 no card, e mb-1 para mb-2
                     htmlContent += `
-                        <div class="bg-[#1a1a1a] rounded-lg shadow-xl p-1 border border-[#333] w-full mb-1">
+                        <div class="bg-[#1a1a1a] rounded-lg shadow-xl p-2 border border-[#333] w-full mb-2">
                             <div class="p-1 text-white">
                                 ${cardContent}
                             </div>
@@ -308,13 +309,13 @@
             resultsBlock.classList.remove('hidden');
             
             resultsDiv.classList.remove('flex', 'flex-col', 'items-center', 'justify-center', 'border-dashed', 'border-green-600', 'bg-transparent');
-            // Ajustando padding e fonte do erro
-            resultsDiv.classList.add('p-2', 'rounded-lg', 'border-red-600', 'border-2', 'bg-[#1a1a1a]');
+            // Revertendo p-2 para p-3
+            resultsDiv.classList.add('p-3', 'rounded-lg', 'border-red-600', 'border-2', 'bg-[#1a1a1a]');
             resultsDiv.innerHTML = `
                 <div class="text-center">
-                    <p class="text-sm font-bold text-red-500 mb-1">❌ Erro na Busca:</p>
-                    <p class="text-gray-400 break-words text-xs">${message}</p>
-                    <p class="text-xs text-red-400 mt-1">Verifique os logs do Apps Script (apenas se a URL ou a sheet estiver errada).</p>
+                    <p class="text-base font-bold text-red-500 mb-2">❌ Erro na Busca:</p>
+                    <p class="text-gray-400 break-words text-sm">${message}</p>
+                    <p class="text-xs text-red-400 mt-2">Verifique os logs do Apps Script (apenas se a URL ou a sheet estiver errada).</p>
                 </div>
             `;
         }
