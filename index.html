@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localizador de Itens | Dark Mode</title>
+    <title>Localizador de Itens | Ultracompacto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -27,54 +27,72 @@
             background-color: var(--green-title);
         }
         .btn-green-custom:hover {
-            background-color: #22c55e; /* Um verde um pouco mais escuro para o hover */
+            background-color: #22c55e;
+        }
+        /* Ajuste fino para inputs e selects mais compactos */
+        .ultra-compact-input {
+             /* Reduzindo o padding vertical: 0.5rem (p-2) */
+             padding: 0.5rem 0.75rem; 
+        }
+        .ultra-compact-button {
+             /* Reduzindo o padding vertical: 0.375rem (py-1.5) */
+             padding-top: 0.375rem; 
+             padding-bottom: 0.375rem;
+             font-size: 0.875rem; /* text-sm */
         }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body class="min-h-screen p-3 md:p-4">
 
     <div id="app" class="max-w-3xl mx-auto">
         
-        <header class="flex items-center justify-between bg-[#242424] p-4 mb-8 rounded-lg shadow-xl border border-[#333]">
-            <h1 class="text-xl font-bold text-green-400 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+        <header class="flex items-center justify-between bg-[#3d3d3d] p-2 mb-2 rounded-lg shadow-xl border border-[#444]">
+            <h1 class="text-base font-bold text-green-400 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
                 Localizador de Itens
             </h1>
             <div>
-                <img src="sr-sem-fundo.png" alt="Grupo SR Logo" class="h-8 md:h-10">
+                <img src="sr-sem-fundo.png" alt="Grupo SR Logo" class="h-7 md:h-8">
             </div>
         </header>
 
-        <div class="bg-[#2e2e2e] p-6 md:p-8 rounded-xl shadow-lg border border-[#3d3d3d] mb-8">
-            <h2 class="text-lg font-semibold mb-6 text-gray-200 border-b border-[#3d3d3d] pb-3">Buscar Item</h2>
+        <div class="bg-[#2e2e2e] p-4 rounded-xl shadow-lg border border-[#3d3d3d] mb-2">
+            <h2 class="text-sm font-semibold mb-2 text-gray-200 border-b border-[#3d3d3d] pb-1">Buscar Item</h2>
             
-            <div class="mb-6">
-                <label for="itemCode" class="block text-sm font-medium text-gray-400 mb-2">
+            <div class="mb-2">
+                <label for="itemCode" class="block text-xs font-medium text-gray-400 mb-0.5">
                     Código do Item (COD ITEM)
                 </label>
                 <input type="text" id="itemCode" placeholder="Informe o código do item"
-                        class="w-full p-3 border border-[#444] rounded-lg text-lg font-mono focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase bg-[#1f1f1f] text-white">
+                        class="w-full ultra-compact-input border border-[#444] rounded-lg text-sm font-mono focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase bg-[#1f1f1f] text-white">
             </div>
 
             <button id="searchButton" onclick="searchItem()"
-                    class="w-full btn-green-custom text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    class="w-full btn-green-custom text-white font-bold ultra-compact-button px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
                 Buscar
             </button>
         </div>
+        
+        <div id="clientFilterBlock" class="bg-[#2e2e2e] p-4 rounded-xl shadow-lg border border-[#3d3d3d] mb-2 hidden">
+            <h2 class="text-sm font-semibold mb-1 text-gray-200">Filtrar por Pedido</h2>
+            <label for="clientSelect" class="block text-xs font-medium text-gray-400 mb-0.5">
+                Selecione o Pedido (com nome do Cliente)
+            </label>
+            <select id="clientSelect" onchange="filterResultsByClient(this.value)"
+                    class="w-full ultra-compact-input border border-[#444] rounded-lg text-sm font-medium focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-[#1f1f1f] text-white appearance-none pr-10">
+                </select>
+        </div>
 
-        <div class="bg-[#242424] p-6 md:p-8 rounded-xl shadow-xl border border-[#333]">
-            <h2 class="text-lg font-semibold mb-6 text-gray-200 border-b border-[#3d3d3d] pb-3">Itens do Carregamento</h2>
+        <div id="resultsBlock" class="bg-[#242424] p-4 rounded-xl shadow-xl border border-[#333] hidden">
+            <h2 class="text-sm font-semibold mb-2 text-gray-200 border-b border-[#3d3d3d] pb-1">Itens do Carregamento</h2>
             
-            <div id="results" class="min-h-[150px] flex flex-col items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-[#444] bg-[#1a1a1a]">
-                <p class="text-gray-500 italic text-center" id="initialMessage">
-                    Aguardando código para iniciar a busca.
-                </p>
-            </div>
+            <div id="results" class="flex flex-col items-center justify-center gap-1 p-1">
+                </div>
 
             <div id="urlSection" class="hidden">
                 <code id="testUrlCode"></code>
@@ -84,31 +102,18 @@
     </div>
     
     <script>
-        function copyToClipboard(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                return true;
-            } catch (err) {
-                console.error('Falha ao copiar:', err);
-                return false;
-            } finally {
-                document.body.removeChild(textarea);
-            }
-        }
+        // Variável global para armazenar TODOS os itens retornados pela API
+        let allFetchedItems = [];
 
+        // Elementos DOM
         const codeInput = document.getElementById('itemCode');
         const resultsDiv = document.getElementById('results');
-        const initialMessage = document.getElementById('initialMessage');
         const searchButton = document.getElementById('searchButton');
-        const urlSection = document.getElementById('urlSection');
-        const testUrlCode = document.getElementById('testUrlCode');
-        const copyConfirmation = document.getElementById('copyConfirmation');
+        const clientSelect = document.getElementById('clientSelect');
+        const clientFilterBlock = document.getElementById('clientFilterBlock');
+        const resultsBlock = document.getElementById('resultsBlock'); 
 
-        // Ordem desejada das chaves no cartão de resultado
+        // ORDEM FINAL E CORRETA DAS CHAVES NO CARD (CAPITALIZAÇÃO EXATA QUE A API RETORNA)
         const DISPLAY_ORDER = [
             "PEDIDO", 
             "CARREGAMENTO", 
@@ -117,23 +122,29 @@
             "DESC TECNICA", 
             "QTDE"
         ];
+        
+        // --- Funções Auxiliares (mantendo a lógica, ajustando apenas a formatação de exibição) ---
 
         async function searchItem() {
-            // Lembre-se de verificar e substituir este URL
+            // ... (Lógica de busca inalterada) ...
+            clientFilterBlock.classList.add('hidden');
+            resultsBlock.classList.add('hidden');
+            allFetchedItems = [];
+            
+            searchButton.disabled = true;
+            searchButton.innerHTML = `<div class="spinner border-4 border-[#333] border-t-4 h-4 w-4 rounded-full mr-2"></div> Buscando...`;
+            
             const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzfjKdYKPkY-HsqB3uxySAQMTUPYrhNby6qjybXWaUgI4TWlwhjC9MNXWT4f9ETL84O/exec"; 
             const itemCode = codeInput.value.trim().toUpperCase();
 
             if (!appsScriptUrl || !itemCode) {
-                displayError("Erro de configuração: A URL do Web Service ou o Código do Item está ausente.");
+                displayError("Por favor, informe o Código do Item para buscar.");
+                searchButton.disabled = false;
                 return;
             }
 
             const baseUrl = appsScriptUrl.endsWith('/exec') ? appsScriptUrl : appsScriptUrl.split('?')[0];
             const fullUrl = `${baseUrl}?query=${encodeURIComponent(itemCode)}`;
-
-            searchButton.disabled = true;
-            searchButton.innerHTML = `<div class="spinner border-4 border-[#333] border-t-4 h-5 w-5 rounded-full mr-2"></div> Buscando...`;
-            displayLoading();
 
             try {
                 const response = await fetch(fullUrl);
@@ -144,104 +155,177 @@
 
                 const data = await response.json();
 
-                if (Array.isArray(data)) {
-                    if (data.length > 0) {
-                        displaySuccess(data);
-                    } else {
-                        displayError(`Nenhum item encontrado para: ${itemCode}`);
-                    }
+                if (Array.isArray(data) && data.length > 0) {
+                    allFetchedItems = data;
+                    setupClientFilter(data);
+                    
+                    clientFilterBlock.classList.remove('hidden'); 
+                    
+                    resultsBlock.classList.add('hidden'); 
+                    resultsDiv.innerHTML = "";
+                    
                 } else if (data.error) {
                     displayError(data.error);
                 } else {
-                    displaySuccess([data]);
+                    displayError("A resposta da API não retornou itens válidos.");
                 }
 
             } catch (error) {
                 console.error("Erro na requisição fetch:", error);
-                displayError(`Erro de Conexão ou Requisição. Detalhes: ${error.message}`);
+                displayError(`Erro de Conexão ou Requisição. Detalhes: ${error.message}. Verifique a URL e a Implantação.`);
             } finally {
                 searchButton.disabled = false;
-                searchButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                searchButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg> Buscar`;
             }
         }
+        
+        function setupClientFilter(items) {
+             // ... (Lógica de filtro inalterada) ...
+            const uniqueClientsMap = {};
+            
+            items.forEach(item => {
+                const displayText = `${item.PEDIDO} (${item.CLIENTE})`; 
+                const valueKey = item.PEDIDO;
+                uniqueClientsMap[valueKey] = displayText;
+            });
 
-        function displayLoading() {
-            initialMessage.classList.add('hidden');
-            resultsDiv.innerHTML = `
-                <div class="flex flex-col items-center p-8 text-center text-blue-400">
-                    <div class="spinner border-4 border-[#3d3d3d] border-t-4 h-8 w-8 rounded-full mb-3"></div>
-                    <p class="font-semibold text-lg">Buscando dados...</p>
-                    <p class="text-sm text-gray-500 mt-1">Aguarde o carregamento do Google Apps Script.</p>
-                </div>
-            `;
-            resultsDiv.classList.add('min-h-[150px]', 'flex', 'flex-col', 'items-center', 'justify-center', 'p-4', 'rounded-lg', 'border', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
-            resultsDiv.classList.remove('border-green-600', 'border-red-600');
+            const uniqueClientsValues = Object.keys(uniqueClientsMap).sort();
+            
+            clientSelect.innerHTML = '';
+            
+            if (uniqueClientsValues.length === 0) {
+                 clientFilterBlock.classList.add('hidden');
+                 return;
+            }
+
+            const defaultOption = document.createElement('option');
+            defaultOption.value = ""; 
+            defaultOption.textContent = "--- Selecione o Pedido/Cliente ---";
+            clientSelect.appendChild(defaultOption);
+
+            uniqueClientsValues.forEach(valueKey => {
+                const option = document.createElement('option');
+                option.value = valueKey;
+                option.textContent = uniqueClientsMap[valueKey]; 
+                clientSelect.appendChild(option);
+            });
+            
+            clientSelect.selectedIndex = 0; 
+            resultsBlock.classList.add('hidden'); 
+            resultsDiv.innerHTML = "";
+        }
+        
+        function filterResultsByClient(selectedClientValue) {
+            // ... (Lógica de filtragem inalterada) ...
+            const filterValue = String(selectedClientValue || '').trim().toUpperCase();
+
+            if (!filterValue || allFetchedItems.length === 0) {
+                 displayAwaitingSelection("Selecione um Pedido para visualizar os itens.");
+                 return;
+            }
+            
+            const filteredItems = allFetchedItems.filter(item => {
+                const itemPedido = String(item.PEDIDO || '').trim().toUpperCase();
+                return itemPedido === filterValue;
+            });
+            
+            if (filteredItems.length > 0) {
+                resultsBlock.classList.remove('hidden');
+                displaySuccess(filteredItems);
+            } else {
+                resultsBlock.classList.add('hidden');
+                displayError(`A filtragem para o Pedido/Cliente selecionado (${selectedClientValue}) não encontrou itens. Isto pode ser um erro de comparação de dados.`);
+            }
         }
 
+        /**
+         * Exibe a mensagem de aguardando seleção. (Ajuste para remover min-h)
+         */
+        function displayAwaitingSelection(message) {
+            resultsDiv.classList.remove('border-green-600', 'border-red-600', 'border-2', 'bg-transparent');
+            
+            // Removendo min-h e reduzindo p-3 para p-2
+            resultsDiv.classList.add('flex', 'flex-col', 'items-center', 'justify-center', 'p-2', 'rounded-lg', 'border', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
+            
+            resultsDiv.innerHTML = `<p class="text-xs text-gray-500 italic text-center" id="initialMessage">${message}</p>`;
+            
+            resultsBlock.classList.add('hidden'); 
+        }
+
+        /**
+         * Exibe uma LISTA de itens encontrados no formato de Cartão.
+         */
         function displaySuccess(items) {
-            initialMessage.classList.add('hidden');
-            
             resultsDiv.classList.remove('flex', 'items-center', 'justify-center', 'border-dashed', 'border-[#444]', 'bg-[#1a1a1a]');
-            
-            resultsDiv.classList.add('border-green-600', 'border-2', 'p-4', 'bg-transparent'); 
+            resultsDiv.classList.add('border-green-600', 'border-2', 'p-1', 'bg-transparent'); // p-1
             
             let htmlContent = '';
-
+            
             items.forEach(item => {
-                htmlContent += `
-                    <div class="bg-[#1a1a1a] rounded-lg shadow-xl p-3 border border-[#333] w-full mb-3">
-                        <div class="p-2 text-white">
-                `;
-
-                // 1. Itera sobre a ordem desejada
+                let cardContent = '';
+                let validContentFoundInCard = false; 
+                
                 DISPLAY_ORDER.forEach(key => {
-                    // 2. Verifica se a chave existe no item retornado
                     if (item.hasOwnProperty(key)) {
-                        htmlContent += `
-                            <div class="flex flex-col mb-2">
+                        const value = item[key]; 
+                        
+                        // Reduzindo mb-1 para mb-0.5
+                        cardContent += `
+                            <div class="flex flex-col mb-0.5">
                                 <span class="text-xs font-medium uppercase text-gray-400">${key.toUpperCase()}:</span>
-                                <span class="text-base text-white font-medium break-words">${item[key]}</span>
+                                <span class="text-sm text-white font-medium break-words">${value}</span>
                             </div>
                         `;
-                        // Remove a chave do objeto para não ser iterada novamente
-                        delete item[key];
+                        
+                        if (value !== null && value !== undefined && String(value).trim() !== "") {
+                            validContentFoundInCard = true;
+                        }
                     }
                 });
                 
-                // 3. Itera sobre chaves remanescentes 
-                for (const key in item) {
-                    if (item.hasOwnProperty(key)) {
-                        htmlContent += `
-                            <div class="flex flex-col mb-2">
-                                <span class="text-xs font-medium uppercase text-gray-400">${key.toUpperCase()}:</span>
-                                <span class="text-base text-white font-medium break-words">${item[key]}</span>
+                if (validContentFoundInCard) {
+                    // Reduzindo o padding do card de p-2 para p-1, e mb-2 para mb-1
+                    htmlContent += `
+                        <div class="bg-[#1a1a1a] rounded-lg shadow-xl p-1 border border-[#333] w-full mb-1">
+                            <div class="p-1 text-white">
+                                ${cardContent}
                             </div>
-                        `;
-                    }
-                }
-                
-                htmlContent += `
                         </div>
-                    </div>
-                `;
+                    `;
+                }
             });
             
-            resultsDiv.innerHTML = htmlContent;
+            if (htmlContent === '') {
+                resultsBlock.classList.add('hidden');
+                displayError("Nenhum item com dados para exibição encontrado. O item foi filtrado, mas os campos estão vazios.");
+            } else {
+                resultsDiv.innerHTML = htmlContent;
+            }
         }
 
         function displayError(message) {
-            initialMessage.classList.add('hidden');
+            resultsBlock.classList.remove('hidden');
+            
             resultsDiv.classList.remove('flex', 'flex-col', 'items-center', 'justify-center', 'border-dashed', 'border-green-600', 'bg-transparent');
-            resultsDiv.classList.add('p-4', 'rounded-lg', 'border-red-600', 'border-2', 'bg-[#1a1a1a]');
+            // Ajustando padding e fonte do erro
+            resultsDiv.classList.add('p-2', 'rounded-lg', 'border-red-600', 'border-2', 'bg-[#1a1a1a]');
             resultsDiv.innerHTML = `
                 <div class="text-center">
-                    <p class="text-lg font-bold text-red-500 mb-2">❌ Erro na Busca:</p>
-                    <p class="text-gray-400 break-words">${message}</p>
-                    <p class="text-sm text-red-400 mt-3">Verifique os logs do Apps Script.</p>
+                    <p class="text-sm font-bold text-red-500 mb-1">❌ Erro na Busca:</p>
+                    <p class="text-gray-400 break-words text-xs">${message}</p>
+                    <p class="text-xs text-red-400 mt-1">Verifique os logs do Apps Script (apenas se a URL ou a sheet estiver errada).</p>
                 </div>
             `;
+        }
+
+        // Inicializa a tela de resultados
+        document.addEventListener('DOMContentLoaded', initializeResults);
+        
+        function initializeResults() {
+             displayAwaitingSelection("Aguardando código para iniciar a busca.");
+             clientFilterBlock.classList.add('hidden');
         }
     </script>
 </body>
