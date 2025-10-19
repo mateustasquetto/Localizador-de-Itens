@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Localizador de Itens | Grupo SR</title>
 
-    <link rel="icon" type="image/png" href="/icon.png"> 
-    <link rel="shortcut icon" href="/favicon.ico"> 
+    <link rel="icon" type="image/png" href="/Localizador-de-Itens/icon.png"> 
+    <link rel="shortcut icon" href="/Localizador-de-Itens/favicon.ico"> 
 
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a1a1a"> <meta name="apple-mobile-web-app-title" content="Localizador SR"> 
+    <link rel="manifest" href="/Localizador-de-Itens/manifest.json">
+    <meta name="theme-color" content="#1a1a1a"> 
+    
+    <meta name="apple-mobile-web-app-title" content="Localizador SR"> 
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes"> 
+    
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <link rel="apple-touch-icon" href="/icon.png"> 
+    <link rel="apple-touch-icon" href="/Localizador-de-Itens/icon.png"> 
     
     <meta name="msapplication-TileColor" content="#1a1a1a">
-    <meta name="msapplication-TileImage" content="/icon.png">
+    <meta name="msapplication-TileImage" content="/Localizador-de-Itens/icon.png">
     <meta name="application-name" content="Localizador SR"> 
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* ... Estilos CSS ... */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #1a1a1a;
@@ -109,11 +115,11 @@
     </div>
     
     <script>
-        // Variáveis globais
+        // Variáveis globais (inalteradas)
         let allPedidos = []; 
         let selectedPedido = null; 
 
-        // Elementos DOM
+        // Elementos DOM (inalterados)
         const codeInput = document.getElementById('itemCode');
         const itemSearchBlock = document.getElementById('itemSearchBlock');
         const resultsDiv = document.getElementById('results');
@@ -130,7 +136,7 @@
             "QTDE"
         ];
         
-        // --- Funções de Inicialização e Lógica (Inalteradas) ---
+        // --- Funções de Lógica (inalteradas) ---
 
         async function fetchAllPedidos() {
             try {
@@ -341,5 +347,4 @@
         }
     </script>
 </body>
-
 </html>
