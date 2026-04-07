@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localizador de Itens | Grupo SR</title>
+
+    <link rel="icon" type="image/png" href="/Localizador-de-Itens/icon.png"> 
+    <link rel="shortcut icon" href="/Localizador-de-Itens/favicon.ico"> 
+
+    <link rel="manifest" href="/Localizador-de-Itens/manifest.json">
+    <meta name="theme-color" content="#1a1a1a"> 
+    
+    <meta name="apple-mobile-web-app-title" content="Localizador SR"> 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes"> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/Localizador-de-Itens/icon.png"> 
+    
+    <meta name="msapplication-TileColor" content="#1a1a1a">
+    <meta name="msapplication-TileImage" content="/Localizador-de-Itens/icon.png">
+    <meta name="application-name" content="Localizador SR"> 
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .spinner {
+            border-top-color: #3b82f6;
+            -webkit-animation: spin 1s ease-in-out infinite;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        :root {
+            --green-title: #4ade80; 
+        }
+        .btn-green-custom {
+            background-color: var(--green-title);
+        }
+        .btn-green-custom:hover {
+            background-color: #22c55e;
+        }
+        .compact-input {
+             padding: 0.625rem 0.75rem; 
+        }
+        .compact-button {
+             padding-top: 0.5rem; 
+             padding-bottom: 0.5rem;
+             font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-6">
+
+    <div id="app" class="max-w-3xl mx-auto">
+        
+        <header class="flex items-center justify-between bg-[#3d3d3d] p-3 mb-4 rounded-lg shadow-xl border border-[#444]">
+            <h1 class="text-base font-bold text-green-400 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+                Localizador de Itens
+            </h1>
+            <div>
+                <img src="sr-sem-fundo.png" alt="Grupo SR Logo" class="h-7 md:h-8">
+            </div>
+        </header>
+
+        <div id="clientFilterBlock" class="bg-[#2e2e2e] p-6 rounded-xl shadow-lg border border-[#3d3d3d] mb-4">
+            <h2 class="text-base font-semibold mb-2 text-gray-200">1. Selecionar Pedido</h2>
+            <label for="clientSelect" class="block text-sm font-medium text-gray-400 mb-1">
+                Pedido (com nome do Cliente)
+            </label>
+            <select id="clientSelect" onchange="enableItemSearch(this.value)"
+                    class="w-full compact-input border border-[#444] rounded-lg text-base font-medium focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-[#1f1f1f] text-white appearance-none pr-10">
+                <option value="">Carregando Pedidos...</option>
+            </select>
+        </div>
+
+        <div id="itemSearchBlock" class="bg-[#2e2e2e] p-6 rounded-xl shadow-lg border border-[#3d3d3d] mb-4 hidden">
+            <h2 class="text-base font-semibold mb-4 text-gray-200 border-b border-[#3d3d3d] pb-2">2. Buscar Item</h2>
+            
+            <div class="mb-4">
+                <label for="itemCode" class="block text-sm font-medium text-gray-400 mb-1">
+                    Código do Item (COD ITEM)
+                </label>
+                <input type="text" id="itemCode" placeholder="Ex: 11597"
+                        class="w-full compact-input border border-[#444] rounded-lg text-base font-mono focus:ring-blue-500 focus:border-blue-500 transition duration-150 uppercase bg-[#1f1f1f] text-white">
+            </div>
+
+            <button id="searchButton" onclick="searchItem()" disabled
+                    class="w-full btn-green-custom text-white font-bold compact-button px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center justify-center opacity-50 cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+                Buscar
+            </button>
+        </div>
+        
+        <div id="resultsBlock" class="bg-[#242424] p-6 rounded-xl shadow-xl border border-[#333] hidden">
+            <h2 class="text-base font-semibold mb-4 text-gray-200 border-b border-[#3d3d3d] pb-2">Itens do Carregamento</h2>
+            <div id="results" class="flex flex-col items-center justify-center gap-2 p-2"></div>
+        </div>
+    </div>
+    
+    <script>
+        let allPedidos = []; 
+        let selectedPedido = null; 
+
+        const codeInput = document.getElementById('itemCode');
+        const itemSearchBlock = document.getElementById('itemSearchBlock');
+        const resultsDiv = document.getElementById('results');
+        const searchButton = document.getElementById('searchButton');
+        const clientSelect = document.getElementById('clientSelect');
+        const resultsBlock = document.getElementById('resultsBlock'); 
+        
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNyEYQEljYEbrSi6K_IXOM57Rgyr2Or1BDYVc4Pb3nAvrH61-OuFVcvEp1WUXV-NVvtA/exec"; 
+        // ID da sua pasta no Drive
+        const DRIVE_FOLDER_ID = "1NHM_IHY4CD8-b3BkUYobXCHyJKrLzHKX";
+
+        const DISPLAY_ORDER = ["CARREGAMENTO", "CODIGO VOL", "COD ITEM", "DESC TECNICA", "QTDE"];
+        
+        async function fetchAllPedidos() {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?mode=pedidos`);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    allPedidos = data;
+                    populateClientSelect(data);
+                }
+            } catch (e) { console.error(e); }
+        }
+        
+        function populateClientSelect(pedidos) {
+            clientSelect.innerHTML = '<option value="">--- Selecione um Pedido ---</option>';
+            pedidos.sort((a, b) => a.PEDIDO.localeCompare(b.PEDIDO)).forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.PEDIDO;
+                option.textContent = `${item.PEDIDO} (${item.CLIENTE})`; 
+                clientSelect.appendChild(option);
+            });
+        }
+        
+        function enableItemSearch(pedidoValue) {
+            selectedPedido = pedidoValue.trim().toUpperCase();
+            resultsBlock.classList.add('hidden');
+            if (selectedPedido) {
+                itemSearchBlock.classList.remove('hidden');
+                searchButton.disabled = false;
+                searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                itemSearchBlock.classList.add('hidden');
+            }
+        }
+
+        async function searchItem() {
+            const itemCode = codeInput.value.trim().toUpperCase();
+            if (!itemCode || !selectedPedido) return;
+
+            resultsBlock.classList.add('hidden');
+            searchButton.disabled = true;
+            searchButton.innerHTML = "Buscando...";
+
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?query=${encodeURIComponent(itemCode)}`);
+                const data = await response.json();
+                const filtered = data.filter(item => String(item.PEDIDO || '').trim().toUpperCase() === selectedPedido);
+
+                if (filtered.length > 0) {
+                    resultsBlock.classList.remove('hidden');
+                    displaySuccess(filtered);
+                } else {
+                    alert("Item não encontrado para este pedido.");
+                }
+            } catch (error) { alert("Erro na busca."); }
+            finally {
+                searchButton.disabled = false;
+                searchButton.innerHTML = "Buscar";
+            }
+        }
+
+        function displaySuccess(items) {
+            let htmlContent = '';
+            items.forEach(item => {
+                const codItem = String(item["COD ITEM"] || "").trim();
+                let cardFields = '';
+                
+                DISPLAY_ORDER.forEach(key => {
+                    cardFields += `
+                        <div class="flex flex-col mb-1">
+                            <span class="text-xs font-medium uppercase text-gray-400">${key}:</span>
+                            <span class="text-sm text-white font-medium">${item[key] || '-'}</span>
+                        </div>
+                    `;
+                });
+                
+                // Link de busca inteligente dentro da pasta do Drive
+                const driveSearchUrl = `https://drive.google.com/drive/folders/${DRIVE_FOLDER_ID}?q=${codItem}`;
+
+                htmlContent += `
+                    <div class="bg-[#1a1a1a] rounded-lg shadow-xl p-3 border border-[#333] w-full mb-2">
+                        ${cardFields}
+                        <div class="mt-4 pt-3 border-t border-[#333]">
+                            <a href="${driveSearchUrl}" target="_blank" 
+                               class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded flex items-center justify-center transition duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                ABRIR PDF NO DRIVE (${codItem})
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            resultsDiv.innerHTML = htmlContent;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchAllPedidos);
+    </script>
+</body>
+</html>
